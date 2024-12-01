@@ -24,4 +24,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    
+    ->withProviders([
+        \Nuwave\Lighthouse\LighthouseServiceProvider::class, 
+        \Nuwave\Lighthouse\Pagination\PaginationServiceProvider::class,
+        \Nuwave\Lighthouse\Validation\ValidationServiceProvider::class
+    ])
+    ->create();

@@ -1,0 +1,34 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"Indicates what fields are available at the top level of a query operation."
+type Query {
+  courses: [Course!]! @field(resolver: "App\\GraphQL\\Queries\\CourseQuery@all")
+  course(id: ID!): Course @field(resolver: "App\\GraphQL\\Queries\\CourseQuery@find")
+}
+
+type Mutation {
+  createCourse(name: String!, description: String!): Course @field(resolver: "App\\GraphQL\\Mutations\\CourseMutation@create")
+  enrollInCourse(courseId: ID!): Enrollment @field(resolver: "App\\GraphQL\\Mutations\\EnrollmentMutation@enroll")
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String!
+  teacher: User!
+  students: [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: String! # "teacher" or "student"
+}
+
+type Enrollment {
+  id: ID!
+  course: Course!
+  student: User!
+}
